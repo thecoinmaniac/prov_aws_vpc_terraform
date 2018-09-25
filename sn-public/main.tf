@@ -8,16 +8,6 @@ resource "aws_subnet" "pub_sn_01" {
   }
 }
 
-# Private subnet
-resource "aws_subnet" "pri_sn_01" {
-  vpc_id = "${aws_vpc.primary_vpc.id}"
-  cidr_block = "${var.pri_sn_01_cidr}"
-  availability_zone = "us-east-1b"
-  tags {
-    Name = "${var.pri_sn_01}"
-  }
-}
-
 # Internet gateway for the public subnet
 resource "aws_internet_gateway" "igw" {
   vpc_id = "${aws_vpc.primary_vpc.id}"
