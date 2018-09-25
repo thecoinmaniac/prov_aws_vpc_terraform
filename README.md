@@ -30,3 +30,32 @@ The scripts in this project have been broken down into four modules
     - input: private and public subnet id's from respective modules
     - output: private and public security group id's
 
+## Executing the scripts
+
+- Install terraform (we're using version v0.11.8)
+- Clone the repo
+- Run `terraform init` to initialize the modules and provider
+- Export AWS account keys
+
+```
+$ export AWS_ACCESS_KEY_ID=myawsaccesskeyid
+$ export AWS_SECRET_ACCESS_KEY=myawsecretaccesskey
+```
+- Run `terraform plan` to dry-run the scripts
+- If everything looks good, run `terraform apply`
+- If you need to change any values, it's recommended to override the variables
+  in environment rather than changing the code e.g. if you need to change the
+  name of vpc, which is defined as `vpc_name` in `variables.tf` file, do the following
+
+```
+$ export TF_VAR_vpc_name=my_vpc_name
+$ terraform plan
+$ terraform apply
+... output
+```
+
+## Next Steps
+
+- We're going to use the state file generated from the execution of these
+  scripts as an input to the next stage of provisioning the infrastructure.
+
