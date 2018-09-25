@@ -1,8 +1,13 @@
+# Setup our aws provider
+provider "aws" {
+  access_key  = "${var.aws_access_key_id}"
+  secret_key  = "${var.aws_secret_access_key}"
+  region      = "${var.vpc_region}"
+}
+
 module "custom_vpc" {
   source = "./vpc"
 
-  aws_access_key_id     = "${var.aws_access_key_id}"
-	aws_secret_access_key = "${var.aws_secret_access_key}"
 	vpc_region            = "${var.vpc_region}"
   vpc_name              = "${var.vpc_name}"
   vpc_cidr_block        = "${var.vpc_cidr_block}"
@@ -11,8 +16,6 @@ module "custom_vpc" {
 module "private_subnet_01" {
   source = "./sn-private"
 
-  aws_access_key_id     = "${var.aws_access_key_id}"
-	aws_secret_access_key = "${var.aws_secret_access_key}"
   vpc_id        = "${module.custom_vpc.vpc_id}"
   vpc_region    = "${var.vpc_region}"
   subnet_cidr   = "${var.pri_sn_01_cidr}"
@@ -23,8 +26,6 @@ module "private_subnet_01" {
 module "private_subnet_02" {
   source = "./sn-private"
 
-  aws_access_key_id     = "${var.aws_access_key_id}"
-	aws_secret_access_key = "${var.aws_secret_access_key}"
   vpc_id        = "${module.custom_vpc.vpc_id}"
   vpc_region    = "${var.vpc_region}"
   subnet_cidr   = "${var.pri_sn_02_cidr}"
@@ -35,8 +36,6 @@ module "private_subnet_02" {
 module "public_subnet" {
   source = "./sn-public"
 
-  aws_access_key_id     = "${var.aws_access_key_id}"
-	aws_secret_access_key = "${var.aws_secret_access_key}"
   vpc_id        = "${module.custom_vpc.vpc_id}"
   vpc_region    = "${var.vpc_region}"
   subnet_cidr   = "${var.pub_sn_cidr}"
@@ -47,8 +46,6 @@ module "public_subnet" {
 module "security_groups" {
   source = "./sg"
 
-  aws_access_key_id     = "${var.aws_access_key_id}"
-	aws_secret_access_key = "${var.aws_secret_access_key}"
   vpc_id        = "${module.custom_vpc.vpc_id}"
   vpc_region    = "${var.vpc_region}"
   private_sg    = "${var.pri_sg}"
