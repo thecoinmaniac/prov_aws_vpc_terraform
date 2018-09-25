@@ -24,19 +24,24 @@ variable "vpc_cidr_block" {
   default = "10.0.0.0/16"
 }
 
-variable "pub_sn_01" {
+variable "pub_sn" {
   description = "Public subnet for demo Network"
   default = "pub_peru"
 }
 
-variable "pub_sn_01_cidr" {
+variable "pub_sn_cidr" {
   description = "CIDR for externally accessible subnet"
   default = "10.0.1.0/24"
 }
 
+variable "pub_sn_az" {
+  description = "Region for public subnet"
+  default = "us-east-2a"
+}
+
 variable "pri_sn_01" {
   description = "Private subnet for demo Network"
-  default = "pri_cal"
+  default = "pri_cali"
 }
 
 variable "pri_sn_01_cidr" {

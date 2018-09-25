@@ -1,8 +1,15 @@
+# Setup our aws provider
+provider "aws" {
+  access_key  = "${var.aws_access_key_id}"
+  secret_key  = "${var.aws_secret_access_key}"
+  region      = "${var.vpc_region}"
+}
+
 # Private security group
-resource "aws_security_group" "pri_sg" {
-  name = "${var.pri_sg}"
+resource "aws_security_group" "private_sg" {
+  name = "${var.private_sg}"
   description = "Security group to access private ports"
-  vpc_id = "${aws_vpc.primary_vpc.id}"
+  vpc_id = "${var.vpc_id}"
 
   # allow memcached port within VPC from public subnet
   ingress {
@@ -10,7 +17,7 @@ resource "aws_security_group" "pri_sg" {
     to_port = 11211
     protocol = "tcp"
     cidr_blocks = [
-      "${var.pub_sn_01_cidr}"]
+      "${var.public_subnet_cidr}"]
   }
 
   # allow redis port within VPC from public subnet
@@ -19,7 +26,7 @@ resource "aws_security_group" "pri_sg" {
     to_port = 6379
     protocol = "tcp"
     cidr_blocks = [
-      "${var.pub_sn_01_cidr}"]
+      "${var.public_subnet_cidr}"]
   }
 
   # allow postgres port within VPC from public subnet
@@ -28,7 +35,7 @@ resource "aws_security_group" "pri_sg" {
     to_port = 5432
     protocol = "tcp"
     cidr_blocks = [
-      "${var.pub_sn_01_cidr}"]
+      "${var.public_subnet_cidr}"]
   }
 
   # allow mysql port within VPC from public subnet
@@ -37,7 +44,7 @@ resource "aws_security_group" "pri_sg" {
     to_port = 3306
     protocol = "tcp"
     cidr_blocks = [
-      "${var.pub_sn_01_cidr}"]
+      "${var.public_subnet_cidr}"]
   }
 
   # allow all outgoing traffic from private subnet
@@ -49,15 +56,15 @@ resource "aws_security_group" "pri_sg" {
       "0.0.0.0/0"]
   }
   tags {
-    Name = "${var.pri_sg}"
+    Name = "${var.private_sg}"
   }
 }
 
 # Public security group
-resource "aws_security_group" "pub_sg" {
-  name = "${var.pub_sg}"
+resource "aws_security_group" "public_sg" {
+  name = "${var.public_sg}"
   description = "Public access security group"
-  vpc_id = "${aws_vpc.primary_vpc.id}"
+  vpc_id = "${var.vpc_id}"
 
   ingress {
     from_port = 22
@@ -72,7 +79,7 @@ resource "aws_security_group" "pub_sg" {
     to_port = 0
     protocol = "tcp"
     cidr_blocks = [
-      "${var.pub_sn_01_cidr}"]
+      "${var.public_subnet_cidr}"]
   }
 
   egress {
@@ -84,6 +91,6 @@ resource "aws_security_group" "pub_sg" {
       "0.0.0.0/0"]
   }
   tags {
-    Name = "$var.pub_sg}"
+    Name = "${var.public_sg}"
   }
 }
