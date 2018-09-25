@@ -28,3 +28,13 @@ variable "vpc_cidr_block" {
   description = "Uber IP addressing for demo Network"
   default = "10.1.0.0/16"
 }
+
+variable "pri_sg" {
+  description = "Security group for private traffic"
+  default = "pri_sg"
+}
+
+variable "pub_sg" {
+  description = "Security group for public traffic"
+  default = "pub_sg"
+}

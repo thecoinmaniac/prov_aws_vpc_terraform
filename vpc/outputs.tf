@@ -1,3 +1,4 @@
+## Variables being exported for downstream consumption
 output "vpc_region" {
   value = "${var.vpc_region}"
 }

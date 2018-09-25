@@ -1,4 +1,4 @@
-module "customVPC" {
+module "custom_vpc" {
   source = "./vpc"
 
   aws_access_key_id     = "${var.aws_access_key_id}"
