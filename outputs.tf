@@ -25,3 +25,7 @@ output "private_security_group" {
 output "public_security_group" {
   value = "${var.pub_sg}"
 }
+
+output "nat_gateway" {
+  value = "${module.nat_gateway.nat_gateway_ip}"
+}

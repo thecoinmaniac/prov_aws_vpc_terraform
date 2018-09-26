@@ -14,6 +14,7 @@ variable "vpc_region" {
   default = "us-east-2"
 }
 
+# VPC Config
 variable "vpc_name" {
   description = "VPC for building demos"
   default = "pacific"
@@ -24,6 +25,7 @@ variable "vpc_cidr_block" {
   default = "10.0.0.0/16"
 }
 
+# Public Subnet Config
 variable "pub_sn" {
   description = "Public subnet for demo Network"
   default = "pub_peru"
@@ -39,6 +41,19 @@ variable "pub_sn_az" {
   default = "us-east-2a"
 }
 
+# Nat Config
+variable "nat_ami_id" {
+  description = "AMI ID for nat instance (different for each region)"
+  # This is the NAT AMI for default region: us-east-2
+  default = "ami-0f9c61b5a562a16af"
+}
+
+variable "nat_instance_type" {
+  description = "Instance size for NAT gateway"
+  default = "t2.micro"
+}
+
+# Private Subnet 1 Config
 variable "pri_sn_01" {
   description = "Private subnet for demo Network"
   default = "pri_cali"
@@ -54,6 +69,7 @@ variable "pri_sn_01_az" {
   default = "us-east-2b"
 }
 
+# Private Subnet 2 Config
 variable "pri_sn_02" {
   description = "Private subnet for demo Network"
   default = "pri_elnino"
@@ -69,6 +85,8 @@ variable "pri_sn_02_az" {
   default = "us-east-2c"
 }
 
+
+# Security Groups
 variable "pri_sg" {
   description = "Security group for private traffic"
   default = "pri_sg"
@@ -78,3 +96,4 @@ variable "pub_sg" {
   description = "Security group for public traffic"
   default = "pub_sg"
 }
+

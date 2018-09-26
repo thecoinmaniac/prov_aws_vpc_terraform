@@ -4,3 +4,4 @@ variable "vpc_region" {}
 variable "subnet_name" {}
 variable "subnet_cidr" {}
 variable "subnet_az" {}
+variable "nat_gw_id" {}
