@@ -29,3 +29,8 @@ resource "aws_route_table" "public_route_table" {
   }
 }
 
+## Associate the routing table to public subnet
+resource "aws_route_table_association" "rt_assn" {
+  subnet_id = "${aws_subnet.public_subnet.id}"
+  route_table_id = "${aws_route_table.public_route_table.id}"
+}

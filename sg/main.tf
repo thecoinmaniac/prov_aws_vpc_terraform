@@ -1,5 +1,5 @@
 # Private security group
-resource "aws_security_group" "private_sg" {
+resource "aws_security_group" "sg_services_only" {
   name = "${var.private_sg}"
   description = "Security group to access private ports"
   vpc_id = "${var.vpc_id}"
@@ -54,7 +54,7 @@ resource "aws_security_group" "private_sg" {
 }
 
 # Public security group
-resource "aws_security_group" "public_sg" {
+resource "aws_security_group" "sg_allow_all" {
   name = "${var.public_sg}"
   description = "Public access security group"
   vpc_id = "${var.vpc_id}"
