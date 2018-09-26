@@ -29,9 +29,6 @@ module "public_subnet" {
   subnet_az     = "${var.pub_sn_az}"
 }
 
-## create NAT GW instance with an EIP, get ID of nat machine
-# inputs : array of CIDR for private subnets, vpc ID
-# output : ID and EIP
 module "nat_gateway" {
   source = "./nat"
   vpc_id        = "${module.custom_vpc.vpc_id}"
@@ -55,7 +52,6 @@ module "private_subnet_01" {
   subnet_name   = "${var.pri_sn_01}"
   subnet_az     = "${var.pri_sn_01_az}"
   nat_gw_id     = "${module.nat_gateway.nat_gateway_id}"
-
 }
 
 module "private_subnet_02" {
@@ -82,6 +78,3 @@ module "security_groups" {
   public_sg     = "${var.pub_sg}"
   public_subnet_cidr = "${var.pub_sn_cidr}"
 }
-
-# add a nat gateway if required in one of the public subnets
-# use EIP
