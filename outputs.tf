@@ -34,6 +34,10 @@ output "public_subnet_id" {
   value = "${module.public_subnet.subnet_id}"
 }
 
+output "public_subnet_access" {
+  value = "${module.public_subnet.public_access}"
+}
+
 output "private_security_group" {
   value = "${var.pri_sg}"
 }
