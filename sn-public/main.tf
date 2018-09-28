@@ -35,13 +35,15 @@ resource "aws_route_table_association" "rt_assn" {
   route_table_id = "${aws_route_table.public_route_table.id}"
 }
 
-## Create a private key that'll be used for access to Bastion host
-resource "tls_private_key" "bastion_key" {
+## SSH key-pair to be used to access instances in public subnet
+## The instances will ONLY be accessible from Bastion Host
+resource "tls_private_key" "public_access_key" {
   algorithm = "RSA"
   rsa_bits  = 4096
 }
 
-resource "aws_key_pair" "bastion_access" {
-  key_name = "bastion_access"
-  public_key = "${tls_private_key.bastion_key.public_key_openssh}"
+resource "aws_key_pair" "public_access" {
+  key_name = "public_access"
+  public_key = "${tls_private_key.public_access_key.public_key_openssh}"
 }
+

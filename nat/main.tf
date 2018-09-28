@@ -43,21 +43,55 @@ resource "aws_security_group" "nat_sg" {
   }
 }
 
+## Create a private key that'll be used for access to Bastion host/NAT Gateway
+resource "tls_private_key" "bastion_key" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "bastion_access" {
+  key_name = "bastion_access"
+  public_key = "${tls_private_key.bastion_key.public_key_openssh}"
+}
+
+## Write the private key to access bastion host in a file
+resource "local_file" "bastion_access_key" {
+  content = "${tls_private_key.bastion_key.private_key_pem}"
+  filename = "${path.module}/id_rsa_bastion"
+}
+
+## Write the private key to access public instances in a file
+resource "local_file" "public_key" {
+  content = "${var.public_key}"
+  filename = "${path.module}/id_rsa_${var.pub_sn}"
+}
+
 ## NAT Gateway.
 ## This will be needed by any private subnet(s) to connect to Internet
 resource "aws_instance" "nat_gw" {
-  ami = "${var.nat_ami_id}"
+  ami               = "${var.nat_ami_id}"
   availability_zone = "${var.pub_sn_az}"
-  instance_type = "${var.nat_instance_type}"
-  key_name = "${var.bastion_access}"
+  instance_type     = "${var.nat_instance_type}"
+  key_name          = "${aws_key_pair.bastion_access.key_name}"
+  subnet_id         = "${var.pub_sn_id}"
 
-  subnet_id = "${var.pub_sn_id}"
   vpc_security_group_ids = [
     "${aws_security_group.nat_sg.id}"]
 
   associate_public_ip_address = true
   source_dest_check = false
 
+  ## Add the private key to access public instances in .ssh folder
+  provisioner "file" {
+    source      = "${path.module}/id_rsa_${var.pub_sn}"
+    destination =  "/home/ec2-user/.ssh/id_rsa_${var.pub_sn}"
+
+    connection {
+      type        = "ssh"
+      user        = "ec2-user"
+      private_key = "${tls_private_key.bastion_key.private_key_pem}"
+    }
+  }
 
   tags = {
     Name = "nat_gw_${var.pub_sn}"

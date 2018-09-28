@@ -59,9 +59,19 @@ resource "aws_security_group" "sg_allow_all" {
   description = "Public access security group"
   vpc_id = "${var.vpc_id}"
 
+  # allow http traffic
   ingress {
-    from_port = 22
-    to_port = 22
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = [
+      "0.0.0.0/0"]
+  }
+
+  # allow https traffic
+  ingress {
+    from_port = 443
+    to_port = 443
     protocol = "tcp"
     cidr_blocks = [
       "0.0.0.0/0"]
@@ -76,7 +86,6 @@ resource "aws_security_group" "sg_allow_all" {
   }
 
   egress {
-    # allow all traffic to private SN
     from_port = "0"
     to_port = "0"
     protocol = "-1"

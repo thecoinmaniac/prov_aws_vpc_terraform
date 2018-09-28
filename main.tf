@@ -41,7 +41,7 @@ module "nat_gateway" {
     "${var.pri_sn_01_cidr}",
     "${var.pri_sn_02_cidr}"
   ]
-  bastion_access = "${module.public_subnet.bastion_access}"
+  public_key      = "${module.public_subnet.public_key}"
 }
 
 module "private_subnet_01" {
