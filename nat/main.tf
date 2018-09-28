@@ -49,6 +49,7 @@ resource "aws_instance" "nat_gw" {
   ami = "${var.nat_ami_id}"
   availability_zone = "${var.pub_sn_az}"
   instance_type = "${var.nat_instance_type}"
+  key_name = "${var.bastion_access}"
 
   subnet_id = "${var.pub_sn_id}"
   vpc_security_group_ids = [
@@ -56,6 +57,7 @@ resource "aws_instance" "nat_gw" {
 
   associate_public_ip_address = true
   source_dest_check = false
+
 
   tags = {
     Name = "nat_gw_${var.pub_sn}"

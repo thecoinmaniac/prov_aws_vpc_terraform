@@ -29,3 +29,7 @@ output "public_security_group" {
 output "nat_gateway" {
   value = "${module.nat_gateway.nat_gateway_ip}"
 }
+
+output "bastion_access_key" {
+  value = "${module.public_subnet.bastion_key}"
+}

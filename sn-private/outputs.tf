@@ -5,3 +5,7 @@ output "subnet_id" {
 output "subnet_name" {
   value = "${var.subnet_name}"
 }
+
+output "private_subnet_access" {
+  value = "${aws_key_pair.private_subnet_access.public_key}"
+}

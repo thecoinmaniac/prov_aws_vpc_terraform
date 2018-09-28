@@ -8,3 +8,4 @@ variable "pub_sn_az" {}
 variable "pri_sn_cidr" {
     type = "list"
 }
+variable "bastion_access" {}
