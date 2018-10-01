@@ -76,5 +76,5 @@ output "nat_gateway" {
 
 output "bastion_access_key" {
   sensitive = true
-  value = "${module.nat_gateway.bastion_key}"
+  value     = "${module.nat_gateway.bastion_key}"
 }

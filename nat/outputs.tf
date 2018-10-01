@@ -8,7 +8,7 @@ output "nat_gateway_id" {
 
 output "bastion_key" {
   sensitive = true
-  value = "${tls_private_key.bastion_key.private_key_pem}"
+  value     = "${tls_private_key.bastion_key.private_key_pem}"
 }
 
 output "bastion_access" {
