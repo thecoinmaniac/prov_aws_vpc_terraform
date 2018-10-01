@@ -48,6 +48,17 @@ resource "aws_security_group" "sg_services_only" {
     ]
   }
 
+  # allow SSH from bastion host
+  ingress {
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
+
+    cidr_blocks = [
+      "${var.public_subnet_cidr}",
+    ]
+  }
+
   # allow all outgoing traffic from private subnet
   egress {
     from_port = "0"
