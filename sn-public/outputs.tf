@@ -8,6 +8,7 @@ output "subnet_name" {
 
 output "public_key" {
   value = "${tls_private_key.public_access_key.private_key_pem}"
+  sensitive = true
 }
 
 output "public_access" {
