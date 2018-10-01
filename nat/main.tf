@@ -81,10 +81,28 @@ resource "aws_instance" "nat_gw" {
   associate_public_ip_address = true
   source_dest_check = false
 
+
+  ## update the permissions of private key file needed to access bastion
+  provisioner "local-exec" {
+    command = "chmod -c 600 ${path.module}/id_rsa_bastion"
+  }
+
   ## Add the private key to access public instances in .ssh folder
   provisioner "file" {
     source      = "${path.module}/id_rsa_${var.pub_sn}"
     destination =  "/home/ec2-user/.ssh/id_rsa_${var.pub_sn}"
+
+    connection {
+      type        = "ssh"
+      user        = "ec2-user"
+      private_key = "${tls_private_key.bastion_key.private_key_pem}"
+    }
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod -c 600 /home/ec2-user/.ssh/id_rsa_${var.pub_sn}",
+    ]
 
     connection {
       type        = "ssh"
