@@ -10,16 +10,32 @@ output "private_subnet_01" {
   value = "${module.private_subnet_01.subnet_name}"
 }
 
+output "private_subnet_01_id" {
+  value = "${module.private_subnet_01.subnet_id}"
+}
+
 output "private_subnet_01_az" {
   value = "${var.pri_sn_01_az}"
+}
+
+output "private_subnet_01_access" {
+  value = "${module.private_subnet_01.private_subnet_access_keyname}"
 }
 
 output "private_subnet_02" {
   value = "${module.private_subnet_02.subnet_name}"
 }
 
+output "private_subnet_02_id" {
+  value = "${module.private_subnet_02.subnet_id}"
+}
+
 output "private_subnet_02_az" {
   value = "${var.pri_sn_02_az}"
+}
+
+output "private_subnet_02_access" {
+  value = "${module.private_subnet_02.private_subnet_access_keyname}"
 }
 
 output "public_subnet" {
@@ -40,6 +56,10 @@ output "public_subnet_access" {
 
 output "private_security_group" {
   value = "${var.pri_sg}"
+}
+
+output "private_security_group_id" {
+  value = "${module.security_groups.sg_services_only}"
 }
 
 output "public_security_group" {

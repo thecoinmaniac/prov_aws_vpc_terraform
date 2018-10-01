@@ -9,3 +9,7 @@ output "subnet_name" {
 output "private_subnet_access" {
   value = "${aws_key_pair.private_subnet_access.public_key}"
 }
+
+output "private_subnet_access_keyname" {
+  value = "${aws_key_pair.private_subnet_access.key_name}"
+}
