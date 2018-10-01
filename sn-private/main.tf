@@ -12,11 +12,6 @@ resource "aws_subnet" "private_subnet" {
 resource "aws_route_table" "rt_private_subnet" {
   vpc_id = "${var.vpc_id}"
 
-  route {
-    cidr_block  = "0.0.0.0/0"
-    instance_id = "${var.nat_gw_id}"
-  }
-
   tags {
     Name = "rt_${var.subnet_name}"
   }

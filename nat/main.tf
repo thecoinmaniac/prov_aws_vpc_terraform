@@ -73,6 +73,18 @@ resource "local_file" "public_key" {
   filename = "${path.module}/id_rsa_${var.pub_sn}"
 }
 
+## Write the private key to access private instances in a file
+resource "local_file" "pri_sn_01_key" {
+  content  = "${var.pri_sn_01_key}"
+  filename = "${path.module}/id_rsa_${var.pri_sn_01}"
+}
+
+## Write the private key to access private instances in a file
+resource "local_file" "pri_sn_02_key" {
+  content  = "${var.pri_sn_02_key}"
+  filename = "${path.module}/id_rsa_${var.pri_sn_02}"
+}
+
 ## NAT Gateway.
 ## This will be needed by any private subnet(s) to connect to Internet
 resource "aws_instance" "nat_gw" {
@@ -106,9 +118,36 @@ resource "aws_instance" "nat_gw" {
     }
   }
 
+  ## Add the private key to access private instances in .ssh folder
+  provisioner "file" {
+    source      = "${path.module}/id_rsa_${var.pri_sn_01}"
+    destination = "/home/ec2-user/.ssh/id_rsa_${var.pri_sn_01}"
+
+    connection {
+      type        = "ssh"
+      user        = "ec2-user"
+      private_key = "${tls_private_key.bastion_key.private_key_pem}"
+    }
+  }
+
+  ## Add the private key to access private instances in .ssh folder
+  provisioner "file" {
+    source      = "${path.module}/id_rsa_${var.pri_sn_02}"
+    destination = "/home/ec2-user/.ssh/id_rsa_${var.pri_sn_02}"
+
+    connection {
+      type        = "ssh"
+      user        = "ec2-user"
+      private_key = "${tls_private_key.bastion_key.private_key_pem}"
+    }
+  }
+
+  ## Update permissions on all the keys
   provisioner "remote-exec" {
     inline = [
       "chmod -c 600 /home/ec2-user/.ssh/id_rsa_${var.pub_sn}",
+      "chmod -c 600 /home/ec2-user/.ssh/id_rsa_${var.pri_sn_01}",
+      "chmod -c 600 /home/ec2-user/.ssh/id_rsa_${var.pri_sn_02}",
     ]
 
     connection {
@@ -116,6 +155,19 @@ resource "aws_instance" "nat_gw" {
       user        = "ec2-user"
       private_key = "${tls_private_key.bastion_key.private_key_pem}"
     }
+  }
+
+  ## Since the private key has been added to bastion host, remove it from local
+  provisioner "local-exec" {
+    command = "rm -f ${path.module}/id_rsa_${var.pub_sn}"
+  }
+
+  provisioner "local-exec" {
+    command = "rm -f ${path.module}/id_rsa_${var.pri_sn_01}"
+  }
+
+  provisioner "local-exec" {
+    command = "rm -f ${path.module}/id_rsa_${var.pri_sn_02}"
   }
 
   tags = {
@@ -127,3 +179,17 @@ resource "aws_eip" "nat_eip" {
   instance = "${aws_instance.nat_gw.id}"
   vpc      = true
 }
+
+## Route the internet bound traffic for both public subnets via NAT instance
+resource "aws_route" "pri_sn_01_route" {
+  route_table_id = "${var.pri_sn_01_rt_id}"
+  destination_cidr_block = "0.0.0.0/0"
+  instance_id = "${aws_instance.nat_gw.id}"
+}
+
+resource "aws_route" "pri_sn_02_route" {
+  route_table_id = "${var.pri_sn_02_rt_id}"
+  destination_cidr_block = "0.0.0.0/0"
+  instance_id = "${aws_instance.nat_gw.id}"
+}
+
