@@ -41,6 +41,38 @@ variable "subnet_public_az" {
   default     = "us-east-2a"
 }
 
+# Private Subnet 1 Config
+variable "subnet_private_01" {
+  description = "Private subnet for demo Network"
+  default     = "cali"
+}
+
+variable "subnet_private_01_cidr" {
+  description = "CIDR for internal subnet"
+  default     = "10.0.128.0/24"
+}
+
+variable "subnet_private_01_az" {
+  description = "Region for private subnet"
+  default     = "us-east-2b"
+}
+
+# Private Subnet 2 Config
+variable "subnet_private_02" {
+  description = "Private subnet for demo Network"
+  default     = "elnino"
+}
+
+variable "subnet_private_02_cidr" {
+  description = "CIDR for internal subnet"
+  default     = "10.0.129.0/24"
+}
+
+variable "subnet_private_02_az" {
+  description = "Region for private subnet"
+  default     = "us-east-2c"
+}
+
 # Nat Config
 variable "nat_ami_id" {
   description = "AMI ID for nat instance (different for each region)"
@@ -52,38 +84,6 @@ variable "nat_ami_id" {
 variable "nat_instance_type" {
   description = "Instance size for NAT gateway"
   default     = "t2.micro"
-}
-
-# Private Subnet 1 Config
-variable "pri_sn_01" {
-  description = "Private subnet for demo Network"
-  default     = "pri_cali"
-}
-
-variable "pri_sn_01_cidr" {
-  description = "CIDR for internal subnet"
-  default     = "10.0.128.0/24"
-}
-
-variable "pri_sn_01_az" {
-  description = "Region for private subnet"
-  default     = "us-east-2b"
-}
-
-# Private Subnet 2 Config
-variable "pri_sn_02" {
-  description = "Private subnet for demo Network"
-  default     = "pri_elnino"
-}
-
-variable "pri_sn_02_cidr" {
-  description = "CIDR for internal subnet"
-  default     = "10.0.129.0/24"
-}
-
-variable "pri_sn_02_az" {
-  description = "Region for private subnet"
-  default     = "us-east-2c"
 }
 
 # Security Groups

@@ -1,57 +1,64 @@
 output "vpc" {
-  value = "${module.custom_vpc.vpc_name}"
+  value = "${module.vpc.name}"
 }
 
 output "vpc_region" {
-  value = "${module.custom_vpc.vpc_region}"
+  value = "${module.vpc.region}"
 }
 
+##############################################################
+# private subnet outputs
+##############################################################
 output "private_subnet_01" {
-  value = "${module.private_subnet_01.subnet_name}"
+  value = "${module.subnet_private_01.name}"
 }
 
 output "private_subnet_01_id" {
-  value = "${module.private_subnet_01.subnet_id}"
+  value = "${module.subnet_private_01.id}"
 }
 
 output "private_subnet_01_az" {
-  value = "${var.pri_sn_01_az}"
+  value = "${var.subnet_private_01_az}"
 }
 
 output "private_subnet_01_access" {
-  value = "${module.private_subnet_01.private_subnet_access_keyname}"
+  value = "${module.subnet_private_01.key_name}"
 }
 
 output "private_subnet_02" {
-  value = "${module.private_subnet_02.subnet_name}"
+  value = "${module.subnet_private_02.name}"
 }
 
 output "private_subnet_02_id" {
-  value = "${module.private_subnet_02.subnet_id}"
+  value = "${module.subnet_private_02.id}"
 }
 
 output "private_subnet_02_az" {
-  value = "${var.pri_sn_02_az}"
+  value = "${var.subnet_private_02_az}"
 }
 
 output "private_subnet_02_access" {
-  value = "${module.private_subnet_02.private_subnet_access_keyname}"
+  value = "${module.subnet_private_02.key_name}"
 }
 
+##############################################################
+# public subnet outputs
+##############################################################
+
 output "public_subnet" {
-  value = "${module.public_subnet.name}"
+  value = "${module.subnet_public.name}"
 }
 
 output "public_subnet_az" {
-  value = "${module.public_subnet.az}"
+  value = "${module.subnet_public.az}"
 }
 
 output "public_subnet_id" {
-  value = "${module.public_subnet.id}"
+  value = "${module.subnet_public.id}"
 }
 
 output "public_subnet_access" {
-  value = "${module.public_subnet.key_name}"
+  value = "${module.subnet_public.key_name}"
 }
 
 output "private_security_group" {

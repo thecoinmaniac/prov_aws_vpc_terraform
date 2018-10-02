@@ -1,12 +1,12 @@
 ## Variables being exported for downstream consumption
-output "vpc_region" {
-  value = "${var.vpc_region}"
+output "name" {
+  value = "${var.vpc_name}"
 }
 
-output "vpc_id" {
+output "id" {
   value = "${aws_vpc.primary_vpc.id}"
 }
 
-output "vpc_name" {
-  value = "${var.vpc_name}"
+output "region" {
+  value = "${var.vpc_region}"
 }

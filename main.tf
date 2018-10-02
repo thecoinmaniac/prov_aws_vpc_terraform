@@ -11,7 +11,7 @@ provider "aws" {
 # Base Network
 ###############################################################################
 
-module "custom_vpc" {
+module "vpc" {
   source = "./vpc"
 
   vpc_region     = "${var.vpc_region}"
@@ -19,59 +19,60 @@ module "custom_vpc" {
   vpc_cidr_block = "${var.vpc_cidr_block}"
 }
 
-module "public_subnet" {
+module "subnet_public" {
   source = "./sn-public"
 
-  vpc_id      = "${module.custom_vpc.vpc_id}"
-  vpc_region  = "${var.vpc_region}"
+  vpc_id      = "${module.vpc.id}"
+  vpc_region  = "${module.vpc.region}"
   subnet_name = "${var.subnet_public}"
   subnet_cidr = "${var.subnet_public_cidr}"
   subnet_az   = "${var.subnet_public_az}"
 }
 
-module "private_subnet_01" {
+module "subnet_private_01" {
   source = "./sn-private"
 
-  vpc_id      = "${module.custom_vpc.vpc_id}"
-  vpc_region  = "${var.vpc_region}"
-  subnet_cidr = "${var.pri_sn_01_cidr}"
-  subnet_name = "${var.pri_sn_01}"
-  subnet_az   = "${var.pri_sn_01_az}"
+  vpc_id      = "${module.vpc.id}"
+  vpc_region  = "${module.vpc.region}"
+  subnet_cidr = "${var.subnet_private_01_cidr}"
+  subnet_name = "${var.subnet_private_01}"
+  subnet_az   = "${var.subnet_private_01_az}"
 }
 
-module "private_subnet_02" {
+module "subnet_private_02" {
   source = "./sn-private"
 
-  vpc_id      = "${module.custom_vpc.vpc_id}"
-  vpc_region  = "${var.vpc_region}"
-  subnet_cidr = "${var.pri_sn_02_cidr}"
-  subnet_name = "${var.pri_sn_02}"
-  subnet_az   = "${var.pri_sn_02_az}"
+  vpc_id      = "${module.vpc.id}"
+  vpc_region  = "${module.vpc.region}"
+  subnet_cidr = "${var.subnet_private_02}"
+  subnet_name = "${var.subnet_private_02_cidr}"
+  subnet_az   = "${var.subnet_private_02_az}"
 }
 
 module "nat_gateway" {
   source            = "./nat"
-  vpc_id            = "${module.custom_vpc.vpc_id}"
+  vpc_id            = "${module.vpc.id}"
   nat_ami_id        = "${var.nat_ami_id}"
   nat_instance_type = "${var.nat_instance_type}"
-  pub_sn            = "${module.public_subnet.name}"
-  pub_sn_id         = "${module.public_subnet.id}"
-  pub_sn_az         = "${module.public_subnet.az}"
+
+  pub_sn    = "${module.subnet_public.name}"
+  pub_sn_id = "${module.subnet_public.id}"
+  pub_sn_az = "${module.subnet_public.az}"
 
   pri_sn_cidr = [
-    "${var.pri_sn_01_cidr}",
-    "${var.pri_sn_02_cidr}",
+    "${var.subnet_private_01_cidr}",
+    "${var.subnet_private_02_cidr}",
   ]
 
-  pri_sn_01       = "${var.pri_sn_01}"
-  pri_sn_01_rt_id = "${module.private_subnet_01.rt_id}"
-  pri_sn_01_key   = "${module.private_subnet_01.private_key}"
+  pri_sn_01       = "${module.subnet_private_01.name}"
+  pri_sn_01_rt_id = "${module.subnet_private_01.route_table_id}"
+  pri_sn_01_key   = "${module.subnet_private_01.private_key}"
 
-  pri_sn_02       = "${var.pri_sn_02}"
-  pri_sn_02_rt_id = "${module.private_subnet_02.rt_id}"
-  pri_sn_02_key   = "${module.private_subnet_02.private_key}"
+  pri_sn_02       = "${module.subnet_private_02.name}"
+  pri_sn_02_rt_id = "${module.subnet_private_02.route_table_id}"
+  pri_sn_02_key   = "${module.subnet_private_02.private_key}"
 
-  public_key = "${module.public_subnet.public_key}"
+  public_key = "${module.subnet_public.public_key}"
 }
 
 ###############################################################################
@@ -81,8 +82,8 @@ module "nat_gateway" {
 module "security_groups" {
   source = "./sg"
 
-  vpc_id             = "${module.custom_vpc.vpc_id}"
-  vpc_region         = "${var.vpc_region}"
+  vpc_id             = "${module.vpc.id}"
+  vpc_region         = "${module.vpc.region}"
   private_sg         = "${var.pri_sg}"
   public_sg          = "${var.pub_sg}"
   public_subnet_cidr = "${var.subnet_public_cidr}"
