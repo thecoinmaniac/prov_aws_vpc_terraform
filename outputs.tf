@@ -39,19 +39,19 @@ output "private_subnet_02_access" {
 }
 
 output "public_subnet" {
-  value = "${module.public_subnet.subnet_name}"
+  value = "${module.public_subnet.name}"
 }
 
 output "public_subnet_az" {
-  value = "${var.pub_sn_az}"
+  value = "${module.public_subnet.az}"
 }
 
 output "public_subnet_id" {
-  value = "${module.public_subnet.subnet_id}"
+  value = "${module.public_subnet.id}"
 }
 
 output "public_subnet_access" {
-  value = "${module.public_subnet.public_access}"
+  value = "${module.public_subnet.key_name}"
 }
 
 output "private_security_group" {

@@ -1,16 +1,24 @@
-output "subnet_id" {
-  value = "${aws_subnet.public_subnet.id}"
+output "id" {
+  value = "${aws_subnet.public.id}"
 }
 
-output "subnet_name" {
+output "name" {
   value = "${var.subnet_name}"
 }
 
-output "public_key" {
-  value     = "${tls_private_key.public_access_key.private_key_pem}"
-  sensitive = true
+output "az" {
+  value = "${var.subnet_az}"
 }
 
-output "public_access" {
-  value = "${aws_key_pair.public_access.key_name}"
+output "key_name" {
+  value = "${aws_key_pair.key_pair.key_name}"
+}
+
+output "public_key" {
+  value = "${aws_key_pair.key_pair.public_key}"
+}
+
+output "private_key" {
+  value     = "${tls_private_key.private_key.private_key_pem}"
+  sensitive = true
 }

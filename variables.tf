@@ -26,18 +26,18 @@ variable "vpc_cidr_block" {
 }
 
 # Public Subnet Config
-variable "pub_sn" {
-  description = "Public subnet for demo Network"
-  default     = "pub_peru"
+variable "subnet_public" {
+  description = "Public subnet for VPC"
+  default     = "peru"
 }
 
-variable "pub_sn_cidr" {
-  description = "CIDR for externally accessible subnet"
+variable "subnet_public_cidr" {
+  description = "CIDR for public subnet"
   default     = "10.0.1.0/24"
 }
 
-variable "pub_sn_az" {
-  description = "Region for public subnet"
+variable "subnet_public_az" {
+  description = "Availability zone for public subnet"
   default     = "us-east-2a"
 }
 

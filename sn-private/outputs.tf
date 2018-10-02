@@ -12,7 +12,7 @@ output "private_subnet_access" {
 
 output "private_key" {
   sensitive = true
-  value = "${tls_private_key.private_subnet_key.private_key_pem}"
+  value     = "${tls_private_key.private_subnet_key.private_key_pem}"
 }
 
 output "private_subnet_access_keyname" {

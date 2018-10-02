@@ -182,14 +182,13 @@ resource "aws_eip" "nat_eip" {
 
 ## Route the internet bound traffic for both public subnets via NAT instance
 resource "aws_route" "pri_sn_01_route" {
-  route_table_id = "${var.pri_sn_01_rt_id}"
+  route_table_id         = "${var.pri_sn_01_rt_id}"
   destination_cidr_block = "0.0.0.0/0"
-  instance_id = "${aws_instance.nat_gw.id}"
+  instance_id            = "${aws_instance.nat_gw.id}"
 }
 
 resource "aws_route" "pri_sn_02_route" {
-  route_table_id = "${var.pri_sn_02_rt_id}"
+  route_table_id         = "${var.pri_sn_02_rt_id}"
   destination_cidr_block = "0.0.0.0/0"
-  instance_id = "${aws_instance.nat_gw.id}"
+  instance_id            = "${aws_instance.nat_gw.id}"
 }
-

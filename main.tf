@@ -24,9 +24,9 @@ module "public_subnet" {
 
   vpc_id      = "${module.custom_vpc.vpc_id}"
   vpc_region  = "${var.vpc_region}"
-  subnet_cidr = "${var.pub_sn_cidr}"
-  subnet_name = "${var.pub_sn}"
-  subnet_az   = "${var.pub_sn_az}"
+  subnet_name = "${var.subnet_public}"
+  subnet_cidr = "${var.subnet_public_cidr}"
+  subnet_az   = "${var.subnet_public_az}"
 }
 
 module "private_subnet_01" {
@@ -54,22 +54,22 @@ module "nat_gateway" {
   vpc_id            = "${module.custom_vpc.vpc_id}"
   nat_ami_id        = "${var.nat_ami_id}"
   nat_instance_type = "${var.nat_instance_type}"
-  pub_sn            = "${module.public_subnet.subnet_name}"
-  pub_sn_id         = "${module.public_subnet.subnet_id}"
-  pub_sn_az         = "${var.pub_sn_az}"
+  pub_sn            = "${module.public_subnet.name}"
+  pub_sn_id         = "${module.public_subnet.id}"
+  pub_sn_az         = "${module.public_subnet.az}"
 
   pri_sn_cidr = [
     "${var.pri_sn_01_cidr}",
     "${var.pri_sn_02_cidr}",
   ]
 
-  pri_sn_01         = "${var.pri_sn_01}"
-  pri_sn_01_rt_id   = "${module.private_subnet_01.rt_id}"
-  pri_sn_01_key     = "${module.private_subnet_01.private_key}"
+  pri_sn_01       = "${var.pri_sn_01}"
+  pri_sn_01_rt_id = "${module.private_subnet_01.rt_id}"
+  pri_sn_01_key   = "${module.private_subnet_01.private_key}"
 
-  pri_sn_02         = "${var.pri_sn_02}"
-  pri_sn_02_rt_id   = "${module.private_subnet_02.rt_id}"
-  pri_sn_02_key     = "${module.private_subnet_02.private_key}"
+  pri_sn_02       = "${var.pri_sn_02}"
+  pri_sn_02_rt_id = "${module.private_subnet_02.rt_id}"
+  pri_sn_02_key   = "${module.private_subnet_02.private_key}"
 
   public_key = "${module.public_subnet.public_key}"
 }
@@ -85,5 +85,5 @@ module "security_groups" {
   vpc_region         = "${var.vpc_region}"
   private_sg         = "${var.pri_sg}"
   public_sg          = "${var.pub_sg}"
-  public_subnet_cidr = "${var.pub_sn_cidr}"
+  public_subnet_cidr = "${var.subnet_public_cidr}"
 }
