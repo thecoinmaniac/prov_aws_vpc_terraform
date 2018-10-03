@@ -1,22 +1,22 @@
 # Expected variables from the caller
 variable "vpc_id" {}
 
-variable "nat_ami_id" {}
-variable "nat_instance_type" {}
+variable "ami_id_nat" {}
+variable "instance_type_nat" {}
 
-variable "pub_sn" {}
-variable "public_key" {}
-variable "pub_sn_id" {}
-variable "pub_sn_az" {}
+variable "subnet_public" {}
+variable "subnet_public_id" {}
+variable "subnet_public_az" {}
+variable "subnet_public_private_key" {}
 
-variable "pri_sn_cidr" {
+variable "subnet_private_cidr_ranges" {
   type = "list"
 }
 
-variable "pri_sn_01" {}
-variable "pri_sn_01_rt_id" {}
-variable "pri_sn_01_key" {}
+variable "subnet_private_01" {}
+variable "subnet_private_01_rt_id" {}
+variable "subnet_private_01_private_key" {}
 
-variable "pri_sn_02" {}
-variable "pri_sn_02_rt_id" {}
-variable "pri_sn_02_key" {}
+variable "subnet_private_02" {}
+variable "subnet_private_02_rt_id" {}
+variable "subnet_private_02_private_key" {}

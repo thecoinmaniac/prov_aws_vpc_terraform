@@ -74,14 +74,14 @@ variable "subnet_private_02_az" {
 }
 
 # Nat Config
-variable "nat_ami_id" {
+variable "ami_id_nat" {
   description = "AMI ID for nat instance (different for each region)"
 
   # This is the NAT AMI for default region: us-east-2
   default = "ami-0f9c61b5a562a16af"
 }
 
-variable "nat_instance_type" {
+variable "instance_type_nat" {
   description = "Instance size for NAT gateway"
   default     = "t2.micro"
 }

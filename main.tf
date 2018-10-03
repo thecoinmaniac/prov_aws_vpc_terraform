@@ -49,30 +49,30 @@ module "subnet_private_02" {
   subnet_az   = "${var.subnet_private_02_az}"
 }
 
-module "nat_gateway" {
+module "nat_instance" {
   source            = "./nat"
   vpc_id            = "${module.vpc.id}"
-  nat_ami_id        = "${var.nat_ami_id}"
-  nat_instance_type = "${var.nat_instance_type}"
+  ami_id_nat        = "${var.ami_id_nat}"
+  instance_type_nat = "${var.instance_type_nat}"
 
-  pub_sn    = "${module.subnet_public.name}"
-  pub_sn_id = "${module.subnet_public.id}"
-  pub_sn_az = "${module.subnet_public.az}"
+  subnet_public = "${module.subnet_public.name}"
+  subnet_public_id = "${module.subnet_public.id}"
+  subnet_public_az = "${module.subnet_public.az}"
+  subnet_public_private_key = "${module.subnet_public.private_key}"
 
-  pri_sn_cidr = [
+  subnet_private_cidr_ranges = [
     "${var.subnet_private_01_cidr}",
     "${var.subnet_private_02_cidr}",
   ]
 
-  pri_sn_01       = "${module.subnet_private_01.name}"
-  pri_sn_01_rt_id = "${module.subnet_private_01.route_table_id}"
-  pri_sn_01_key   = "${module.subnet_private_01.private_key}"
+  subnet_private_01   = "${module.subnet_private_01.name}"
+  subnet_private_01_rt_id = "${module.subnet_private_01.route_table_id}"
+  subnet_private_01_private_key = "${module.subnet_private_01.private_key}"
 
-  pri_sn_02       = "${module.subnet_private_02.name}"
-  pri_sn_02_rt_id = "${module.subnet_private_02.route_table_id}"
-  pri_sn_02_key   = "${module.subnet_private_02.private_key}"
+  subnet_private_02 = "${module.subnet_private_02.name}"
+  subnet_private_02_rt_id = "${module.subnet_private_02.route_table_id}"
+  subnet_private_02_private_key = "${module.subnet_private_02.private_key}"
 
-  public_key = "${module.subnet_public.public_key}"
 }
 
 ###############################################################################

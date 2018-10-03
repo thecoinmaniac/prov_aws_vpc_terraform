@@ -1,16 +1,16 @@
-output "nat_gateway_ip" {
-  value = "${aws_eip.nat_eip.public_ip}"
+output "public_ip" {
+  value = "${aws_eip.eip.public_ip}"
 }
 
-output "nat_gateway_id" {
-  value = "${aws_instance.nat_gw.id}"
+output "id" {
+  value = "${aws_instance.nat.id}"
 }
 
-output "bastion_key" {
+output "key_name" {
+  value = "${aws_key_pair.key_pair.key_name}"
+}
+
+output "private_key" {
   sensitive = true
-  value     = "${tls_private_key.bastion_key.private_key_pem}"
-}
-
-output "bastion_access" {
-  value = "${aws_key_pair.bastion_access.key_name}"
+  value     = "${tls_private_key.private_key.private_key_pem}"
 }

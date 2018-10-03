@@ -77,11 +77,11 @@ output "public_security_group_id" {
   value = "${module.security_groups.sg_allow_all}"
 }
 
-output "nat_gateway" {
-  value = "${module.nat_gateway.nat_gateway_ip}"
+output "nat_public_ip" {
+  value = "${module.nat_instance.public_ip}"
 }
 
-output "bastion_access_key" {
+output "nat_access_key" {
   sensitive = true
-  value     = "${module.nat_gateway.bastion_key}"
+  value     = "${module.nat_instance.private_key}"
 }
