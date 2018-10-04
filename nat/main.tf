@@ -103,7 +103,7 @@ resource "aws_instance" "nat" {
 
   ## update the permissions of private key file needed to access bastion
   provisioner "local-exec" {
-    command = "chmod -c 600 ${path.module}/id_rsa_bastion"
+    command = "chmod -c 600 ${path.module}/id_rsa_bastion.pem"
   }
 
   ## Add the private key to access public instances in .ssh folder

@@ -1,6 +1,6 @@
 # Private security group
-resource "aws_security_group" "sg_services_only" {
-  name        = "${var.private_sg}"
+resource "aws_security_group" "internal" {
+  name        = "${var.sg_internal}"
   description = "Security group to access private ports"
   vpc_id      = "${var.vpc_id}"
 
@@ -11,7 +11,7 @@ resource "aws_security_group" "sg_services_only" {
     protocol  = "tcp"
 
     cidr_blocks = [
-      "${var.public_subnet_cidr}",
+      "${var.subnet_public_cidr}",
     ]
   }
 
@@ -22,7 +22,7 @@ resource "aws_security_group" "sg_services_only" {
     protocol  = "tcp"
 
     cidr_blocks = [
-      "${var.public_subnet_cidr}",
+      "${var.subnet_public_cidr}",
     ]
   }
 
@@ -33,7 +33,7 @@ resource "aws_security_group" "sg_services_only" {
     protocol  = "tcp"
 
     cidr_blocks = [
-      "${var.public_subnet_cidr}",
+      "${var.subnet_public_cidr}",
     ]
   }
 
@@ -44,7 +44,7 @@ resource "aws_security_group" "sg_services_only" {
     protocol  = "tcp"
 
     cidr_blocks = [
-      "${var.public_subnet_cidr}",
+      "${var.subnet_public_cidr}",
     ]
   }
 
@@ -55,7 +55,7 @@ resource "aws_security_group" "sg_services_only" {
     protocol  = "tcp"
 
     cidr_blocks = [
-      "${var.public_subnet_cidr}",
+      "${var.subnet_public_cidr}",
     ]
   }
 
@@ -71,13 +71,13 @@ resource "aws_security_group" "sg_services_only" {
   }
 
   tags {
-    Name = "${var.private_sg}"
+    Name = "${var.sg_internal}"
   }
 }
 
 # Public security group
-resource "aws_security_group" "sg_allow_all" {
-  name        = "${var.public_sg}"
+resource "aws_security_group" "public" {
+  name        = "${var.sg_public}"
   description = "Public access security group"
   vpc_id      = "${var.vpc_id}"
 
@@ -109,7 +109,7 @@ resource "aws_security_group" "sg_allow_all" {
     protocol  = "-1"
 
     cidr_blocks = [
-      "${var.public_subnet_cidr}",
+      "${var.subnet_public_cidr}",
     ]
   }
 
@@ -124,6 +124,6 @@ resource "aws_security_group" "sg_allow_all" {
   }
 
   tags {
-    Name = "${var.public_sg}"
+    Name = "${var.sg_public}"
   }
 }

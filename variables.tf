@@ -87,12 +87,12 @@ variable "instance_type_nat" {
 }
 
 # Security Groups
-variable "pri_sg" {
+variable "sg_internal" {
   description = "Security group for private traffic"
-  default     = "pri_sg"
+  default     = "internal"
 }
 
-variable "pub_sg" {
+variable "sg_public" {
   description = "Security group for public traffic"
-  default     = "pub_sg"
+  default     = "public"
 }

@@ -9,35 +9,35 @@ output "vpc_region" {
 ##############################################################
 # private subnet outputs
 ##############################################################
-output "private_subnet_01" {
+output "subnet_private_01" {
   value = "${module.subnet_private_01.name}"
 }
 
-output "private_subnet_01_id" {
+output "subnet_private_01_id" {
   value = "${module.subnet_private_01.id}"
 }
 
-output "private_subnet_01_az" {
+output "subnet_private_01_az" {
   value = "${var.subnet_private_01_az}"
 }
 
-output "private_subnet_01_access" {
+output "subnet_private_01_key_name" {
   value = "${module.subnet_private_01.key_name}"
 }
 
-output "private_subnet_02" {
+output "subnet_private_02" {
   value = "${module.subnet_private_02.name}"
 }
 
-output "private_subnet_02_id" {
+output "subnet_private_02_id" {
   value = "${module.subnet_private_02.id}"
 }
 
-output "private_subnet_02_az" {
+output "subnet_private_02_az" {
   value = "${var.subnet_private_02_az}"
 }
 
-output "private_subnet_02_access" {
+output "subnet_private_02_key_name" {
   value = "${module.subnet_private_02.key_name}"
 }
 
@@ -45,43 +45,43 @@ output "private_subnet_02_access" {
 # public subnet outputs
 ##############################################################
 
-output "public_subnet" {
+output "subnet_public" {
   value = "${module.subnet_public.name}"
 }
 
-output "public_subnet_az" {
+output "subnet_public_az" {
   value = "${module.subnet_public.az}"
 }
 
-output "public_subnet_id" {
+output "subnet_public_id" {
   value = "${module.subnet_public.id}"
 }
 
-output "public_subnet_access" {
+output "subnet_public_key_name" {
   value = "${module.subnet_public.key_name}"
 }
 
-output "private_security_group" {
-  value = "${var.pri_sg}"
+output "security_group_internal" {
+  value = "${var.sg_internal}"
 }
 
-output "private_security_group_id" {
-  value = "${module.security_groups.sg_services_only}"
+output "security_group_internal_id" {
+  value = "${module.security_groups.internal_id}"
 }
 
-output "public_security_group" {
-  value = "${var.pub_sg}"
+output "security_group_public" {
+  value = "${var.sg_public}"
 }
 
-output "public_security_group_id" {
-  value = "${module.security_groups.sg_allow_all}"
+output "security_group_public_id" {
+  value = "${module.security_groups.public_id}"
 }
 
 output "nat_public_ip" {
   value = "${module.nat_instance.public_ip}"
 }
 
-output "nat_access_key" {
+output "nat_private_key" {
   sensitive = true
   value     = "${module.nat_instance.private_key}"
 }
