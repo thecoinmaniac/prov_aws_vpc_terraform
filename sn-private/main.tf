@@ -3,7 +3,7 @@ resource "aws_subnet" "private" {
   cidr_block        = "${var.subnet_cidr}"
   availability_zone = "${var.subnet_az}"
 
-  tags {
+  tags = {
     Name = "private_${var.subnet_name}"
   }
 }
@@ -12,7 +12,7 @@ resource "aws_subnet" "private" {
 resource "aws_route_table" "private_route_table" {
   vpc_id = "${var.vpc_id}"
 
-  tags {
+  tags = {
     Name = "private_${var.subnet_name}"
   }
 }
