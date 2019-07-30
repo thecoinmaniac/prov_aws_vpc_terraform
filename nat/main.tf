@@ -45,7 +45,7 @@ resource "aws_security_group" "nat_sg" {
     ]
   }
 
-  tags {
+  tags = {
     Name = "sg_nat_${var.subnet_public}"
   }
 }
