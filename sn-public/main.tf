@@ -4,7 +4,7 @@ resource "aws_subnet" "public" {
   cidr_block        = "${var.subnet_cidr}"
   availability_zone = "${var.subnet_az}"
 
-  tags {
+  tags = {
     Name = "public_${var.subnet_name}"
   }
 }
@@ -13,7 +13,7 @@ resource "aws_subnet" "public" {
 resource "aws_internet_gateway" "internet_gateway" {
   vpc_id = "${var.vpc_id}"
 
-  tags {
+  tags = {
     Name = "public_${var.subnet_name}"
   }
 }
@@ -22,7 +22,7 @@ resource "aws_internet_gateway" "internet_gateway" {
 resource "aws_route_table" "public_route_table" {
   vpc_id = "${var.vpc_id}"
 
-  tags {
+  tags = {
     Name = "public_${var.subnet_name}"
   }
 }
