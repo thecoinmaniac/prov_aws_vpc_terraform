@@ -123,7 +123,7 @@ resource "aws_security_group" "public" {
     ]
   }
 
-  tags {
+  tags = {
     Name = "${var.sg_public}"
   }
 }
