@@ -70,7 +70,7 @@ resource "aws_security_group" "internal" {
     ]
   }
 
-  tags {
+  tags = {
     Name = "${var.sg_internal}"
   }
 }
