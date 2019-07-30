@@ -128,6 +128,7 @@ resource "aws_instance" "nat" {
       type        = "ssh"
       user        = "ec2-user"
       private_key = "${tls_private_key.private_key.private_key_pem}"
+      host = "self.public_ip"
     }
   }
 
@@ -140,6 +141,7 @@ resource "aws_instance" "nat" {
       type        = "ssh"
       user        = "ec2-user"
       private_key = "${tls_private_key.private_key.private_key_pem}"
+      host = "self.public_ip"
     }
   }
 
@@ -155,6 +157,7 @@ resource "aws_instance" "nat" {
       type        = "ssh"
       user        = "ec2-user"
       private_key = "${tls_private_key.private_key.private_key_pem}"
+      host = "self.public_ip"
     }
   }
 
